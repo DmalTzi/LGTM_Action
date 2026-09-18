@@ -5,5 +5,5 @@ if score >= 50:
 else:
     result = "Fail"
 
-print(f"Score: {score}")
+print(f"Fakkkkkkk Score: {score}")
 print(f"Result: {result}")
