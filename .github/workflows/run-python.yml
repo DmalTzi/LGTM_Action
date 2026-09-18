@@ -5,7 +5,7 @@ on:
 
 jobs:
   run-python:
-    runs-os: ubuntu-latest
+    runs-on: ubuntu-latest
 
     steps:
       - name: Download repository
