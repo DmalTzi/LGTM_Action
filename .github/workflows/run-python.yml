@@ -1,0 +1,21 @@
+name: run-python
+
+on:
+  push:
+
+jobs:
+  run-python:
+    runs-os: ubuntu-latest
+
+    steps:
+      - name: Download repository
+        uses: actions/checkout@v6
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Run Program
+        run:  python3 main.py
+
