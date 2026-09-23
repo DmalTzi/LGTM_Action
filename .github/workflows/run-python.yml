@@ -1,8 +1,13 @@
-name: run-python
+name: Run Python
 
 on:
   push:
+    branches:
+      - main
+
   pull_request:
+    branches:
+      - main
 
 jobs:
   run-python:
@@ -17,6 +22,20 @@ jobs:
         with:
           python-version: "3.12"
 
-      - name: Run Program
-        run:  python3 main.py
+      - name: Run program
+        run: python3 main.py
 
+      - name: Prepare SSH
+        if: github.event_name == 'push'
+        run: |
+          mkdir -p ~/.ssh
+          printf '%s' "$SSH_PRIVATE_KEY" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          ssh-keyscan -H 178.128.22.26 >> ~/.ssh/known_hosts
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+
+      - name: Copy file to server
+        if: github.event_name == 'push'
+        run: |
+          scp main.py submission@178.128.22.26:/home/submission/deploy/
